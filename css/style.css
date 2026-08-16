@@ -68,3 +68,20 @@ body {
 .o {
 	color: var(--accent-o);
 }
+
+#new-game-btn {
+	background-color: var(--ink);
+	color: var(--bg);
+	border: none;
+	border-radius: 12px;
+	padding: 0.6rem 1.5rem;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	margin-top: 0.75rem;
+	transition: background-color 0.15s ease;
+}
+
+#new-game-btn:hover {
+	background-color: #444;
+}
