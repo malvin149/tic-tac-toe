@@ -19,3 +19,10 @@ const Gameboard = (function () {
 
 	return { placeMark, isCellEmpty, getBoard, resetBoard }
 })()
+
+const createPlayer = (name, marker) => {
+	const getName = () => name
+	const getMarker = () => marker
+
+	return { getName, getMarker }
+}
