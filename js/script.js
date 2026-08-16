@@ -84,15 +84,21 @@ const GameController = (function () {
 		}
 	}
 
+	const resetGame = () => {
+		Gameboard.resetBoard()
+		gameOver = false
+		activePlayer = playerOne
+	}
 	const getGameOver = () => gameOver
 	const getActivePlayer = () => activePlayer
 
-	return { playRound, getActivePlayer, getGameOver }
+	return { playRound, getActivePlayer, getGameOver, resetGame }
 })()
 
 const DisplayController = (function () {
 	const container = document.querySelector("#board")
 	const status = document.querySelector("#status")
+	const resetBtn = document.querySelector("#new-game-btn")
 
 	// Clears and rebuilds every cell on each call instead of updating just
 	// the changed one - for a 9-cell board the cost is negligible, and it
@@ -118,6 +124,12 @@ const DisplayController = (function () {
 	container.addEventListener("click", (e) => {
 		const index = Number(e.target.dataset.index)
 		status.textContent = GameController.playRound(index)
+		renderBoard()
+	})
+
+	resetBtn.addEventListener("click", () => {
+		GameController.resetGame()
+		status.textContent = `${GameController.getActivePlayer().getName()}'s turn`
 		renderBoard()
 	})
 
