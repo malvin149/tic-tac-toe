@@ -89,3 +89,37 @@ const GameController = (function () {
 
 	return { playRound, getActivePlayer, getGameOver }
 })()
+
+const DisplayController = (function () {
+	const container = document.querySelector("#board")
+	const status = document.querySelector("#status")
+
+	// Clears and rebuilds every cell on each call instead of updating just
+	// the changed one - for a 9-cell board the cost is negligible, and it
+	// guarantees the display can never drift out of sync with Gameboard's actual state.
+	const renderBoard = () => {
+		container.replaceChildren()
+		const board = Gameboard.getBoard()
+
+		board.forEach((cell, index) => {
+			const btn = document.createElement("button")
+			btn.dataset.index = index
+			btn.textContent = cell
+			container.appendChild(btn)
+		})
+	}
+
+	// One listener on the container instead of one per button - cells get
+	// rebuilt on every render, so per-button listeners would need to be
+	// reattached each time. Delegation avoids that entirely.
+	container.addEventListener("click", (e) => {
+		const index = Number(e.target.dataset.index)
+		status.textContent = GameController.playRound(index)
+		renderBoard()
+	})
+
+	// Renders the empty board on load so there's something to click
+	// before any move has been made
+	renderBoard()
+	return { renderBoard }
+})()
