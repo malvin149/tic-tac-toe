@@ -60,3 +60,11 @@ body {
 	font-weight: 600;
 	margin-bottom: 0.75rem;
 }
+
+.x {
+	color: var(--accent-x);
+}
+
+.o {
+	color: var(--accent-o);
+}

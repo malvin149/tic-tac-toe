@@ -105,6 +105,9 @@ const DisplayController = (function () {
 			const btn = document.createElement("button")
 			btn.dataset.index = index
 			btn.textContent = cell
+
+			btn.classList.add(cell === "X" ? "x" : "o")
+
 			container.appendChild(btn)
 		})
 	}
