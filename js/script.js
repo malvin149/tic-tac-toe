@@ -23,8 +23,9 @@ const Gameboard = (function () {
 const createPlayer = (name, marker) => {
 	const getName = () => name
 	const getMarker = () => marker
+	const setName = (newName) => (name = newName)
 
-	return { getName, getMarker }
+	return { getName, getMarker, setName }
 }
 
 const GameController = (function () {
@@ -91,14 +92,20 @@ const GameController = (function () {
 	}
 	const getGameOver = () => gameOver
 	const getActivePlayer = () => activePlayer
+	const setPlayerNames = (nameOne, nameTwo) => {
+		playerOne.setName(nameOne)
+		playerTwo.setName(nameTwo)
+	}
 
-	return { playRound, getActivePlayer, getGameOver, resetGame }
+	return { playRound, getActivePlayer, getGameOver, resetGame, setPlayerNames }
 })()
 
 const DisplayController = (function () {
 	const container = document.querySelector("#board")
 	const status = document.querySelector("#status")
 	const resetBtn = document.querySelector("#new-game-btn")
+	const playerOneInput = document.querySelector("#player-one")
+	const playerTwoInput = document.querySelector("#player-two")
 
 	// Clears and rebuilds every cell on each call instead of updating just
 	// the changed one - for a 9-cell board the cost is negligible, and it
@@ -128,6 +135,10 @@ const DisplayController = (function () {
 	})
 
 	resetBtn.addEventListener("click", () => {
+		GameController.setPlayerNames(
+			playerOneInput.value || "Player One",
+			playerTwoInput.value || "Player Two",
+		)
 		GameController.resetGame()
 		status.textContent = `${GameController.getActivePlayer().getName()}'s turn`
 		renderBoard()
